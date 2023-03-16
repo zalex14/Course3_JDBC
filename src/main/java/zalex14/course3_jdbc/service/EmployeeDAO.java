@@ -1,8 +1,6 @@
 package zalex14.course3_jdbc.service;
 
 import zalex14.course3_jdbc.model.Employee;
-
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -10,17 +8,17 @@ import java.util.List;
  */
 public interface EmployeeDAO {
     // Создание(добавление) сущности Employee в таблицу
-    int create(Employee employee) throws SQLException;
+    void create(Employee employee);
 
     // Получение конкретного объекта Employee по id
-    Employee readById(int id) throws SQLException;
+    Employee readById(int id);
 
     // Получение списка всех объектов Employee из базы
     List<Employee> readAll();
 
     // Изменение конкретного объекта Employee в базе по id
-    int updateById(int id, Employee employee);
+    void updateById(int id, Employee employee);
 
     // Удаление конкретного объекта Employee из базы по id
-    int deleteById(int id);
+    void deleteById(Employee employee);
 }
