@@ -29,6 +29,14 @@ public class Employee {
     @Column(name = "city_id")
     private int city;
 
+    public Employee(String firstName, String lastName, String gender, int age, int city) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.age = age;
+        this.city = city;
+    }
+
     @Override
     public String toString() {
         return "ID: " + employeeId +

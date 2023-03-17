@@ -16,7 +16,6 @@ public class Course3JdbcApplication {
 
         // Задание 1
         System.out.println("\nЗадание 1");
-
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
         // Получение всех объектов Employee из базы
@@ -28,11 +27,11 @@ public class Course3JdbcApplication {
 
         // Создание(добавление) сущности Employee в таблицу
         System.out.println("\nСоздание(добавление) сущности personNew ");
-        int id = 22;
-        Employee personNew = new Employee(id, "Jakov", "Yal", "male", 25, 9);
+        Employee personNew = new Employee("Jakov", "Yal", "male", 25, 9);
         employeeDAO.create(personNew);
 
         // Получение объекта Employee по id
+        int id = 3;
         System.out.println("\nПолучение объекта " + id + " " + employeeDAO.readById(id));
 
         // Изменение объекта personNew в базе
@@ -41,7 +40,8 @@ public class Course3JdbcApplication {
         employeeDAO.updateById(id, personUpdated);
 
         // Удаление объекта Employee из базы
-        System.out.println("\nУдаление объекта " + personNew + " из базы");
-        employeeDAO.deleteById(personNew);
+        Employee personNew2 = new Employee(8, "Jakov", "Yal", "male", 25, 9);
+        System.out.println("\nУдаление объекта " + personNew2 + " из базы");
+        employeeDAO.deleteById(personNew2);
     }
 }
