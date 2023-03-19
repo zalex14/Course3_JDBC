@@ -10,12 +10,16 @@
         <property name="connection.username">postgres</property> <!-- DB User -->
         <property name="connection.password">password</property> <!-- DB Password -->
 
+        <property name="connection.pool_size">1</property>  <!-- Настроить встроенный пул соединений JDBC -->
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> <!-- DB Dialect -->
         <property name="hbm2ddl.auto">update</property> <!-- create / create-drop / update -->
 
         <property name="show_sql">true</property> <!-- Show SQL in console -->
         <property name="format_sql">true</property> <!-- Show SQL formatted -->
 
+        <mapping package="zalex14.course3_jdbc.model" />
+        <mapping class="zalex14.course3_jdbc.model.Employee" />
+        <mapping class="zalex14.course3_jdbc.model.City" />
 
     </session-factory>
 </hibernate-configuration>

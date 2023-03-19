@@ -17,7 +17,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int employeeId;
+    private Integer employeeId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -25,11 +25,12 @@ public class Employee {
     @Column(name = "gender")
     private String gender;
     @Column(name = "age")
-    private int age;
-    @Column(name = "city_id")
-    private int city;
+    private Integer age;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "city_id", nullable = false, referencedColumnName = "city_id")
+    private City city;
 
-    public Employee(String firstName, String lastName, String gender, int age, int city) {
+    public Employee(String firstName, String lastName, String gender, int age, City city) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -40,9 +41,9 @@ public class Employee {
     @Override
     public String toString() {
         return "ID: " + employeeId +
-                " Имя: " + firstName + " " + lastName +
+                " Сотрудник: " + firstName + " " + lastName +
                 " Пол: " + gender +
                 " Возраст: " + age +
-                " Город: " + getCity();
+                " Город: " + city.getCityName();
     }
 }

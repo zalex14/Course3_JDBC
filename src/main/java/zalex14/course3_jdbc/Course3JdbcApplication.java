@@ -1,47 +1,43 @@
 package zalex14.course3_jdbc;
 
-import zalex14.course3_jdbc.model.*;
+import zalex14.course3_jdbc.model.City;
+import zalex14.course3_jdbc.model.Employee;
+import zalex14.course3_jdbc.service.CityDAO;
 import zalex14.course3_jdbc.service.EmployeeDAO;
+import zalex14.course3_jdbc.service.impl.CityDAOImpl;
 import zalex14.course3_jdbc.service.impl.EmployeeDAOImpl;
 
-import java.util.List;
-
 /**
- * Задание 1 JDBC Hibernate
+ * Задание 1 JDBC Hibernate работа с несколькими таблицами
  */
 public class Course3JdbcApplication {
 
     public static void main(String[] args) {
-        System.out.println("Course3_JDBC_Hibernate");
+        System.out.println("Course3_JDBC_Hibernate работа с несколькими таблицами");
 
-        // Задание 1
-        System.out.println("\nЗадание 1");
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+        CityDAO cityDAO = new CityDAOImpl();
+/*
+  CRUD для Employee и City
+ */
+        System.out.println("\nПолучение всех Employee и City. Из одного города может быть несколько сотрудников");
+        cityDAO.readAll().forEach(System.out::println);
 
-        // Получение всех объектов Employee из базы
-        System.out.println("\nПолучение всех объектов из базы");
-        List<Employee> list = employeeDAO.readAll();
-        for (Employee employee : list) {
-            System.out.println(employee);
-        }
+        System.out.println("\nПолучение всех Employee и City. Один сотрудник только из одного города");
+        employeeDAO.readAll().forEach(System.out::println);
 
-        // Создание(добавление) сущности Employee в таблицу
-        System.out.println("\nСоздание(добавление) сущности personNew ");
-        Employee personNew = new Employee("Jakov", "Yal", "male", 25, 9);
-        employeeDAO.create(personNew);
+        System.out.println("\nПолучение Employee и City по id");
+        int id = 2;
+        System.out.println("\n " + cityDAO.readById(id));
 
-        // Получение объекта Employee по id
-        int id = 3;
-        System.out.println("\nПолучение объекта " + id + " " + employeeDAO.readById(id));
+        System.out.println("\nСоздание(добавление) Employee и City");
+        employeeDAO.create(new Employee("Jan", "Mur", "male", 25, new City("Ufa")));
 
-        // Изменение объекта personNew в базе
-        System.out.println("\nИзменение объекта " + id + " в базе по id");
-        Employee personUpdated = new Employee(id, "Jana", "Yal", "female", 25, 4);
-        employeeDAO.updateById(id, personUpdated);
+        System.out.println("\nИзменение Employee и City");
+        employeeDAO.update(new Employee("Ric", "Rey", "male", 35, new City("Rom")));
 
-        // Удаление объекта Employee из базы
-        Employee personNew2 = new Employee(8, "Jakov", "Yal", "male", 25, 9);
-        System.out.println("\nУдаление объекта " + personNew2 + " из базы");
-        employeeDAO.deleteById(personNew2);
+        System.out.println("\nУдаление Employee и City");
+        employeeDAO.delete(new Employee("Ric", "Rey", "male", 35, new City("Rom")));
+
     }
 }

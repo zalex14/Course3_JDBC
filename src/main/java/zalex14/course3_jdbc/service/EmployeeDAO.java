@@ -1,6 +1,7 @@
 package zalex14.course3_jdbc.service;
 
 import zalex14.course3_jdbc.model.Employee;
+
 import java.util.List;
 
 /**
@@ -17,8 +18,8 @@ public interface EmployeeDAO {
     List<Employee> readAll();
 
     // Изменение конкретного объекта Employee в базе по id
-    void updateById(int id, Employee employee);
+    void update(Employee employee);
 
     // Удаление конкретного объекта Employee из базы по id
-    void deleteById(Employee employee);
+    void delete(Employee employee);
 }
