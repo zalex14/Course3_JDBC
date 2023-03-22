@@ -18,8 +18,8 @@
         <property name="format_sql">true</property> <!-- Show SQL formatted -->
 
         <mapping package="zalex14.course3_jdbc.model" />
-        <mapping class="zalex14.course3_jdbc.model.Employee" />
-        <mapping class="zalex14.course3_jdbc.model.City" />
+        <mapping class="zalex14.course3_jdbc.model.Users" />
+        <mapping class="zalex14.course3_jdbc.model.Grants" />
 
     </session-factory>
 </hibernate-configuration>

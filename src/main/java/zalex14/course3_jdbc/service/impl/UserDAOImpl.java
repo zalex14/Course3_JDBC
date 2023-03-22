@@ -4,27 +4,27 @@ import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import zalex14.HibernateSessionFactoryUtil;
-import zalex14.course3_jdbc.model.Employee;
-import zalex14.course3_jdbc.service.EmployeeDAO;
+import zalex14.course3_jdbc.model.Users;
+import zalex14.course3_jdbc.service.UserDAO;
 
 import java.util.List;
 
 /**
- * Обработка персональных данных сотрудников
- * CRUD для Employee
+ * Обработка персональных данных пользователей
  */
 @AllArgsConstructor
-public class EmployeeDAOImpl implements EmployeeDAO {
+public class UserDAOImpl implements UserDAO {
+
     /**
      * Создание(добавление) сущности Employee в таблицу
      */
     @Override
-    public void create(Employee employee) {
+    public void create(Users users) {
 // Формируем запрос к базе с помощью PreparedStatement
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.save(employee);
+                session.save(users);
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
@@ -33,12 +33,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     /**
-     * Получение конкретного объекта Employee по id
+     * Получение конкретного объекта по id
      */
     @Override
-    public Employee readById(int id) {
+    public Users readById(int id) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            return session.get(Employee.class, id);
+            return session.get(Users.class, id);
         }
     }
 
@@ -46,9 +46,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
      * Получение списка всех объектов Employee из базы
      */
     @Override
-    public List<Employee> readAll() {
+    public List<Users> readAll() {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            return session.createQuery("From Employee", Employee.class).list();
+            return session.createQuery("From Users", Users.class).list();
         }
     }
 
@@ -56,11 +56,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
      * Изменение конкретного объекта Employee в базе по id
      */
     @Override
-    public void update(Employee employee) {
+    public void update(Users users) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.update(employee);
+                session.update(users);
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
@@ -72,11 +72,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
      * Удаление конкретного объекта Employee из базы по id
      */
     @Override
-    public void delete(Employee employee) {
+    public void delete(Users users) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.delete(employee);
+                session.remove(users);
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();

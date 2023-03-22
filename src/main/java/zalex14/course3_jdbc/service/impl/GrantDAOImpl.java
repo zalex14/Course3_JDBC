@@ -3,26 +3,25 @@ package zalex14.course3_jdbc.service.impl;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import zalex14.HibernateSessionFactoryUtil;
-import zalex14.course3_jdbc.model.City;
-import zalex14.course3_jdbc.service.CityDAO;
+import zalex14.course3_jdbc.model.Grants;
+import zalex14.course3_jdbc.service.GrantDAO;
 
 import java.util.List;
 
 /**
- * Обработка городов сотрудников
- * CRUD для City
+ * Обработка прав пользователей
  */
-public class CityDAOImpl implements CityDAO {
+public class GrantDAOImpl implements GrantDAO {
 
     /**
-     * Создание(добавление) сущности City
+     * Создание(добавление)
      */
     @Override
-    public void create(City city) {
+    public void create(Grants grants) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.save(city);
+                session.persist(grants);
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
@@ -31,34 +30,34 @@ public class CityDAOImpl implements CityDAO {
     }
 
     /**
-     * Получение конкретного объекта City по id
+     * Получение по id
      */
     @Override
-    public City readById(int id) {
+    public Grants readById(int id) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            return session.get(City.class, id);
+            return session.get(Grants.class, id);
         }
     }
 
     /**
-     * Получение списка всех городов из базы
+     * Получение списка всех
      */
     @Override
-    public List<City> readAll() {
+    public List<Grants> readAll() {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            return session.createQuery("From City", City.class).list();
+            return session.createQuery("From Grants", Grants.class).list();
         }
     }
 
     /**
-     * Изменение конкретного объекта City в базе по id
+     * Изменение по id
      */
     @Override
-    public void update(City city) {
+    public void update(Grants grants) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.update(city);
+                session.persist(grants);
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
@@ -67,14 +66,14 @@ public class CityDAOImpl implements CityDAO {
     }
 
     /**
-     * Удаление конкретного объекта City из базы по id
+     * Удаление по id
      */
     @Override
-    public void delete(City city) {
+    public void delete(Grants grants) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.delete(city);
+                session.remove(grants);
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();

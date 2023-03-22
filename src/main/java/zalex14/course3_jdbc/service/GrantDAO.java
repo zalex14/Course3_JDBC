@@ -1,25 +1,26 @@
 package zalex14.course3_jdbc.service;
 
-import zalex14.course3_jdbc.model.City;
+import zalex14.course3_jdbc.model.Grants;
 
 import java.util.List;
 
 /**
- * Обрабатываем города сотрудников
+ * Обрабатываем права пользователей
  */
-public interface CityDAO {
+@SuppressWarnings("ALL")
+public interface GrantDAO {
     // Создание(добавление) City в таблицу
-    void create(City city);
+    void create(Grants grants);
 
     // Получение конкретного City по id
-    City readById(int id);
+    Grants readById(int id);
 
     // Получение списка всех City из базы
-    List<City> readAll();
+    List<Grants> readAll();
 
     // Изменение конкретного объекта City в базе по id
-    void update(City city);
+    void update(Grants grants);
 
     // Удаление конкретного объекта Employee из базы по id
-    void delete(City city);
+    void delete(Grants grants);
 }

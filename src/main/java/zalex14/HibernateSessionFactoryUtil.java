@@ -3,8 +3,8 @@ package zalex14;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import zalex14.course3_jdbc.model.City;
-import zalex14.course3_jdbc.model.Employee;
+import zalex14.course3_jdbc.model.Grants;
+import zalex14.course3_jdbc.model.Users;
 
 /**
  * Конфигурация Hibernate
@@ -19,8 +19,8 @@ public class HibernateSessionFactoryUtil {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration().configure();
-                configuration.addAnnotatedClass(Employee.class);
-                configuration.addAnnotatedClass(City.class);
+                configuration.addAnnotatedClass(Users.class);
+                configuration.addAnnotatedClass(Grants.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 
