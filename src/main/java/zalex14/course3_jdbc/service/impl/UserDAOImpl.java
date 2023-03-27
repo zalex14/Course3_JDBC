@@ -4,27 +4,55 @@ import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import zalex14.HibernateSessionFactoryUtil;
-import zalex14.course3_jdbc.model.Users;
+import zalex14.course3_jdbc.model.*;
 import zalex14.course3_jdbc.service.UserDAO;
 
 import java.util.List;
 
 /**
- * Обработка персональных данных пользователей
+ * Операции с пользователями
  */
 @AllArgsConstructor
 public class UserDAOImpl implements UserDAO {
 
-    /**
-     * Создание(добавление) сущности Employee в таблицу
-     */
+    // 1. Получаем список пользователей (без ролей)
     @Override
-    public void create(Users users) {
-// Формируем запрос к базе с помощью PreparedStatement
+    public List<User> readAllName() {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            return session.createQuery("From User", User.class).list();
+        }
+    }
+
+    //  2. Получение пользователя с правами по id
+    @Override
+    public User readByIdFaculty(int id) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+//            return session.get(User.class, id);
+            User result = session.get(User.class, id);
+            result.getFaculties().size();
+            return result;
+        }
+    }
+
+    // 3. Получение пользователя по id
+    @Override
+    public User readByIdName(int id) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+//            return session.get(User.class, id);
+            User result = session.get(User.class, id);
+            result.getFaculties().size();
+            return result;
+        }
+    }
+
+
+    //  4. Удаление пользователя по id
+    @Override
+    public void remove(User user) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.save(users);
+                session.remove(user);
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
@@ -32,35 +60,15 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    /**
-     * Получение конкретного объекта по id
-     */
+    // 5 Добавляем пользователя
     @Override
-    public Users readById(int id) {
-        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            return session.get(Users.class, id);
-        }
-    }
-
-    /**
-     * Получение списка всех объектов Employee из базы
-     */
-    @Override
-    public List<Users> readAll() {
-        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            return session.createQuery("From Users", Users.class).list();
-        }
-    }
-
-    /**
-     * Изменение конкретного объекта Employee в базе по id
-     */
-    @Override
-    public void update(Users users) {
+    public void create(User user) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.update(users);
+                session.save(user);
+//                session.persist(user);
+//                session.flush();
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
@@ -68,15 +76,13 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    /**
-     * Удаление конкретного объекта Employee из базы по id
-     */
+    // Изменение конкретного объекта Employee в базе по id
     @Override
-    public void delete(Users users) {
+    public void update(User user) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.remove(users);
+                session.update(user);
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();

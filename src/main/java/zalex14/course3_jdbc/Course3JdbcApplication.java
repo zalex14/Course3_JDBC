@@ -1,10 +1,12 @@
 package zalex14.course3_jdbc;
 
-import zalex14.course3_jdbc.model.Users;
-import zalex14.course3_jdbc.service.GrantDAO;
+import zalex14.course3_jdbc.model.*;
+import zalex14.course3_jdbc.service.FacultyDAO;
 import zalex14.course3_jdbc.service.UserDAO;
-import zalex14.course3_jdbc.service.impl.GrantDAOImpl;
+import zalex14.course3_jdbc.service.impl.FacultyDAOImpl;
 import zalex14.course3_jdbc.service.impl.UserDAOImpl;
+
+import java.util.Set;
 
 /**
  * Задание Hibernate Final
@@ -15,27 +17,44 @@ public class Course3JdbcApplication {
         System.out.println("Hibernate_Final");
 
         UserDAO userDAO = new UserDAOImpl();
-        GrantDAO grantDAO = new GrantDAOImpl();
+        FacultyDAO facultyDAO = new FacultyDAOImpl();
 
-        System.out.println("\nСписок пользователей из БД без ролей (без логинов и паролей)");
-        userDAO.readAll().forEach(System.out::println);
+        //  Заполняем
+        Faculty rootFaculty = new Faculty("ROOT");
+        Faculty adminFaculty = new Faculty("ADMIN");
+        Faculty userFaculty = new Faculty("USER");
+        Faculty guestFaculty = new Faculty("GUEST");
 
-        System.out.println("\nСписок пользователей по конкретной роли");
-        grantDAO.readAll().forEach(System.out::println);
+        facultyDAO.create(rootFaculty);
+        facultyDAO.create(adminFaculty);
+        facultyDAO.create(userFaculty);
+        facultyDAO.create(guestFaculty);
 
-        System.out.println("\nКонкретный пользователь с его ролями из БД");
-        System.out.println("\n " + userDAO.readById(2).toString(Users.StringFormat.valueOf("F2")));
+        User userSenior = new User(null, "Tom Kruze", "kruze", "de4ght",
+                Set.of(rootFaculty, adminFaculty));
+        User userJunior = new User(null, "Will Smith", "smith", "ly2ght",
+                Set.of(guestFaculty, userFaculty));
 
-        System.out.println("\nРедактировать существующего пользователя");
-        Users user2 = userDAO.readById(2);
+
+        System.out.println("\n1. Список пользователей из БД без ролей");
+        userDAO.readAllName().forEach(System.out::println);
+
+        System.out.println("\n2. Конкретный пользователь с его ролями из БД");
+        System.out.println("\n " + userDAO.readByIdFaculty(803).toString(User.StringFormat.valueOf("ALL")));
+
+        System.out.println("\n3. Список пользователей по конкретной роли");
+        facultyDAO.readByIdName(userFaculty.getGrantId()).getUsers().forEach(System.out::println);
+
+        System.out.println("\n4. Удаление пользователя");
+        userDAO.remove(userSenior);
+
+        System.out.println("\n5. Добавление нового пользователя с ролями");
+        userDAO.create(userSenior);
+
+        System.out.println("\n6. Редактировать существующего пользователя");
+        User user2 = userDAO.readByIdName(802);
         user2.setName("Edwin King");
         user2.setLogin("king");
         userDAO.update(user2);
-
-        System.out.println("\nУдаление пользователя");
-        userDAO.delete(userDAO.readById(21));
-
-        System.out.println("\nДобавление нового пользователя с ролями");
-        userDAO.create(new Users(0, "Jan Bronte", "bronte", "z00v5", grantDAO.readById(4)));
     }
 }

@@ -1,25 +1,28 @@
 package zalex14.course3_jdbc.service;
 
-import zalex14.course3_jdbc.model.Users;
-
+import zalex14.course3_jdbc.model.User;
 import java.util.List;
 
 /**
  * Обрабатываем данные пользователей
  */
 public interface UserDAO {
-    // Создание(добавление) сущности Employee в таблицу
-    void create(Users users);
 
-    // Получение конкретного объекта Employee по id
-    Users readById(int id);
+    // Получение списка всех пользователей
+    List<User> readAllName();
 
-    // Получение списка всех объектов Employee из базы
-    List<Users> readAll();
+    // Получение пользователя по id
+    User readByIdName(int id);
 
-    // Изменение конкретного объекта Employee в базе по id
-    void update(Users users);
+    // Получение пользователя с правами по id
+    User readByIdFaculty(int id);
 
-    // Удаление конкретного объекта Employee из базы по id
-    void delete(Users users);
+    // Добавление пользователя
+    void create(User user);
+
+    // Изменение пользователя
+    void update(User user);
+
+    // Удаление пользователя
+    void remove(User user);
 }
