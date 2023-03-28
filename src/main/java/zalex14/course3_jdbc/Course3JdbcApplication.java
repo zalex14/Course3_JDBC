@@ -19,40 +19,31 @@ public class Course3JdbcApplication {
         UserDAO userDAO = new UserDAOImpl();
         FacultyDAO facultyDAO = new FacultyDAOImpl();
 
-        //  Заполняем
-        Faculty rootFaculty = new Faculty("ROOT");
-        Faculty adminFaculty = new Faculty("ADMIN");
-        Faculty userFaculty = new Faculty("USER");
-        Faculty guestFaculty = new Faculty("GUEST");
-
-        facultyDAO.create(rootFaculty);
-        facultyDAO.create(adminFaculty);
-        facultyDAO.create(userFaculty);
-        facultyDAO.create(guestFaculty);
-
-        User userSenior = new User(null, "Tom Kruze", "kruze", "de4ght",
-                Set.of(rootFaculty, adminFaculty));
-        User userJunior = new User(null, "Will Smith", "smith", "ly2ght",
-                Set.of(guestFaculty, userFaculty));
-
+        //  Заполняем и заносим значения
+        Faculty facultyAdmin = new Faculty("ADMIN");
+        Faculty facultyRoot = new Faculty("ROOT");
+        User userSenior = new User("Tom Kruze", "kruze", "de4ght",
+                Set.of(facultyRoot, facultyAdmin));
+//        facultyDAO.create(facultyAdmin);
+//        userDAO.create(userSenior);
 
         System.out.println("\n1. Список пользователей из БД без ролей");
         userDAO.readAllName().forEach(System.out::println);
 
         System.out.println("\n2. Конкретный пользователь с его ролями из БД");
-        System.out.println("\n " + userDAO.readByIdFaculty(803).toString(User.StringFormat.valueOf("ALL")));
+        System.out.println("\n " + userDAO.read(12L).toString(User.StringFormat.valueOf("ALL")));
 
         System.out.println("\n3. Список пользователей по конкретной роли");
-        facultyDAO.readByIdName(userFaculty.getGrantId()).getUsers().forEach(System.out::println);
+        System.out.println("\n " + facultyDAO.readAll());
 
         System.out.println("\n4. Удаление пользователя");
-        userDAO.remove(userSenior);
+        userDAO.delete(userSenior);
 
         System.out.println("\n5. Добавление нового пользователя с ролями");
         userDAO.create(userSenior);
 
         System.out.println("\n6. Редактировать существующего пользователя");
-        User user2 = userDAO.readByIdName(802);
+        User user2 = userDAO.read(12);
         user2.setName("Edwin King");
         user2.setLogin("king");
         userDAO.update(user2);

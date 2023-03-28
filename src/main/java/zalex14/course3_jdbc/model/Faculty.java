@@ -1,10 +1,12 @@
 package zalex14.course3_jdbc.model;
 
-import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -17,19 +19,21 @@ import java.util.Set;
 @Table(name = "faculty")
 public class Faculty {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private Integer grantId;
+    private Long grantId;
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SUBSELECT)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_grant",
             joinColumns = @JoinColumn(name = "faculty_id", referencedColumnName = "id"),     //
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")  //
     )
+//    @LazyCollection(LazyCollectionOption.EXTRA)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<User> users;
 
     public Faculty(String name) {
@@ -38,6 +42,10 @@ public class Faculty {
 
     @Override
     public String toString() {
-        return " Роль ID: " + grantId ;
+        return " Роль ID: " + grantId + users;
+    }
+
+    public enum Faculties {
+        ROOT, ADMIN, BACKUP, USER, GUEST
     }
 }

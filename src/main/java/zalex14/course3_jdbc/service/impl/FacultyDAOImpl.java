@@ -23,19 +23,9 @@ public class FacultyDAOImpl implements FacultyDAO {
 
     // 2.  Получение роли по id
     @Override
-    public Faculty readByIdName(int id) {
+    public Faculty read(long id) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             return session.get(Faculty.class, id);
-        }
-    }
-
-    // 3.  Получение роли по id
-    @Override
-    public Faculty readByIdUser(int id) {
-        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            Faculty faculties = session.get(Faculty.class, id);
-            faculties.getUsers().size();
-            return faculties;
         }
     }
 
@@ -45,8 +35,7 @@ public class FacultyDAOImpl implements FacultyDAO {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-//                session.save(faculty);
-                session.persist(faculty);
+                session.persist(faculty);   // session.save(faculty);
                 session.flush();
                 transaction.commit();
             } catch (IllegalArgumentException e) {

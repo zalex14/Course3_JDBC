@@ -1,18 +1,17 @@
 package zalex14.course3_jdbc.service.impl;
 
-import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import zalex14.HibernateSessionFactoryUtil;
 import zalex14.course3_jdbc.model.*;
 import zalex14.course3_jdbc.service.UserDAO;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Операции с пользователями
  */
-@AllArgsConstructor
 public class UserDAOImpl implements UserDAO {
 
     // 1. Получаем список пользователей (без ролей)
@@ -23,36 +22,25 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    //  2. Получение пользователя с правами по id
+    // 2. Получение пользователя по id
     @Override
-    public User readByIdFaculty(int id) {
+    public User read(long id) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-//            return session.get(User.class, id);
-            User result = session.get(User.class, id);
-            result.getFaculties().size();
-            return result;
-        }
-    }
-
-    // 3. Получение пользователя по id
-    @Override
-    public User readByIdName(int id) {
-        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-//            return session.get(User.class, id);
-            User result = session.get(User.class, id);
-            result.getFaculties().size();
-            return result;
+            session.get(User.class, id);
+            return session.get(User.class, id);
         }
     }
 
 
-    //  4. Удаление пользователя по id
+    //  3. Удаление пользователя void
     @Override
-    public void remove(User user) {
+    @Transactional
+    public void delete(User user) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
                 session.remove(user);
+                session.flush();
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
@@ -60,15 +48,14 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    // 5 Добавляем пользователя
+    // 4 Добавляем пользователя void
     @Override
     public void create(User user) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.save(user);
-//                session.persist(user);
-//                session.flush();
+                session.persist(user);
+                session.flush();
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
@@ -76,13 +63,13 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    // Изменение конкретного объекта Employee в базе по id
+    // 5 Изменение по пользователя Obj
     @Override
     public void update(User user) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             try {
                 Transaction transaction = session.beginTransaction();
-                session.update(user);
+                session.merge(user);
                 transaction.commit();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();

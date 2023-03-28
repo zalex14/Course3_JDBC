@@ -1,10 +1,8 @@
 package zalex14.course3_jdbc.model;
 
-import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -17,21 +15,21 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private Integer userId;
+    private Long userId;
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "login", nullable = false)
     private String login;
     @Column(name = "password", nullable = false)
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SUBSELECT)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_grant",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),    //
             inverseJoinColumns = @JoinColumn(name = "faculty_id", referencedColumnName = "id"))  //
+//    @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<Faculty> faculties;
 
     public User(String name, String login, String password, Set<Faculty> faculties) {
