@@ -1,10 +1,6 @@
 package zalex14.course3_jdbc.model;
 
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -42,7 +38,7 @@ public class Faculty {
 
     @Override
     public String toString() {
-        return " Роль ID: " + grantId + users;
+        return " Роль ID" + grantId + ":  " + users + "\n";
     }
 
     public enum Faculties {

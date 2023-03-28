@@ -41,7 +41,7 @@ public class User {
 
     @Override
     public String toString() {
-        return " User ID: " + userId + " " + name + " (Логин: " + login + " Пароль: " + password + ") ";
+        return " User ID " + userId + ": " + name + " (Логин: " + login + " Пароль: " + password + ") ";
     }
 
     public enum StringFormat {

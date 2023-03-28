@@ -22,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    // 2. Получение пользователя по id
+    // 2. Получение пользователя по id Obj
     @Override
     public User read(long id) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
@@ -30,7 +30,6 @@ public class UserDAOImpl implements UserDAO {
             return session.get(User.class, id);
         }
     }
-
 
     //  3. Удаление пользователя void
     @Override

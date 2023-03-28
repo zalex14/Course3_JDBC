@@ -29,7 +29,7 @@ public class FacultyDAOImpl implements FacultyDAO {
         }
     }
 
-    // 5. Добавляем пользователя
+    // 3. Добавляем пользователя
     @Override
     public void create(Faculty faculty) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {

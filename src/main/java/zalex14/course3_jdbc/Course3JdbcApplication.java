@@ -22,10 +22,10 @@ public class Course3JdbcApplication {
         //  Заполняем и заносим значения
         Faculty facultyAdmin = new Faculty("ADMIN");
         Faculty facultyRoot = new Faculty("ROOT");
-        User userSenior = new User("Tom Kruze", "kruze", "de4ght",
+        User userSenior = new User("Tom Kruzik", "kruzik", "de4ght",
                 Set.of(facultyRoot, facultyAdmin));
-//        facultyDAO.create(facultyAdmin);
-//        userDAO.create(userSenior);
+        facultyDAO.create(facultyAdmin);
+        userDAO.create(userSenior);
 
         System.out.println("\n1. Список пользователей из БД без ролей");
         userDAO.readAllName().forEach(System.out::println);
