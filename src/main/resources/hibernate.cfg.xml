@@ -17,9 +17,9 @@
         <property name="show_sql">true</property> <!-- Show SQL in console -->
         <property name="format_sql">true</property> <!-- Show SQL formatted -->
 
-        <mapping package="zalex14.course3_jdbc.model" />
-        <mapping class="zalex14.course3_jdbc.model.User" />
-        <mapping class="zalex14.course3_jdbc.model.Faculty" />
+        <mapping package="zalex14.course3_jdbc.entity" />
+        <mapping class="zalex14.course3_jdbc.entity.User" />
+        <mapping class="zalex14.course3_jdbc.entity.Faculty" />
 
     </session-factory>
 </hibernate-configuration>

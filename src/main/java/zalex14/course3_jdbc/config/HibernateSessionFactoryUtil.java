@@ -1,10 +1,10 @@
-package zalex14;
+package zalex14.course3_jdbc.config;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import zalex14.course3_jdbc.model.Faculty;
-import zalex14.course3_jdbc.model.User;
+import zalex14.course3_jdbc.entity.Faculty;
+import zalex14.course3_jdbc.entity.User;
 
 /**
  * Конфигурация Hibernate
@@ -23,7 +23,6 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(Faculty.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
