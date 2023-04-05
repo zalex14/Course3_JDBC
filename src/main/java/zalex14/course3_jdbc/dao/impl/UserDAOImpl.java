@@ -31,13 +31,13 @@ public class UserDAOImpl implements UserDAO {
 
     // Конкретный пользователь с его ролями из БД по id
     @Override
-    public String userAndFaculty(Long id) {
+    public User userAndFaculty(Long id) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             User user = session.createQuery("FROM User u JOIN FETCH u.faculty WHERE u.id = :id", User.class)
                     .setParameter("id", id).getSingleResultOrNull();
             transaction.commit();
-            return user.toString() + user.getFaculty(); //  .toString(User.StringFormat.valueOf("ALL"))
+            return user;// user.toString() + user.getFaculty();  .toString(User.StringFormat.valueOf("ALL"))
         }
     }
 
@@ -61,12 +61,11 @@ public class UserDAOImpl implements UserDAO {
 
     // 4. Удаление пользователя
     @Override
-    public String delete(User user) {
+    public void delete(User user) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.remove(user);
             transaction.commit();
-            return "Удален пользователь ID: " + user.getUserId();
         }
     }
 

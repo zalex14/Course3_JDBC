@@ -17,7 +17,7 @@ public interface UserDAO {
     User readUserById(Long id);
 
     // Конкретный пользователь с его ролями из БД по id
-    String userAndFaculty(Long id);
+    User userAndFaculty(Long id);
 
     // 3. Список пользователей по конкретной роли
     List<Faculty> readAllFaculty();
@@ -25,7 +25,7 @@ public interface UserDAO {
     List<User> readUsersByFaculty(Access access);
 
     // 4. Удаление пользователя
-    String delete(User user);
+    void delete(User user);
 
     // 5. Добавление нового пользователя с ролями
     Long add(User user);

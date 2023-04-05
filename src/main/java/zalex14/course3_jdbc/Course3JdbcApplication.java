@@ -30,7 +30,8 @@ public class Course3JdbcApplication {
         System.out.println("\n Список пользователей по конкретной роли");
         userDAO.readUsersByFaculty(Access.ADMIN).forEach(System.out::println);
 
-        System.out.println("\n4. Удаление пользователя" + userDAO.delete(userDAO.readUserById(3L)));
+        System.out.println("\n4. Удаление пользователя");
+        userDAO.delete(userDAO.readUserById(3L));
 
         System.out.println("\n5. Добавление нового пользователя с ролями");
         Set<Faculty> accessRootUser = Set.of(new Faculty(Access.ADMIN), new Faculty(Access.GUEST));
